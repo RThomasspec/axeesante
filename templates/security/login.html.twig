@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-md-6 col-lg-4">
+				<div class="card shadow-sm border-0">
+					<div class="card-body p-5">
+						<h1 class="h3 mb-3 font-weight-normal text-center">Connexion</h1>
+
+						{% if error %}
+							<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+						{% endif %}
+
+						{% if app.user %}
+							<div class="mb-3">
+								You are logged in as
+								{{ app.user.userIdentifier }},
+								<a href="{{ path('app_logout') }}">Logout</a>
+							</div>
+						{% endif %}
+
+						<form method="post">
+							<div class="mb-4">
+								<label for="inputEmail" class="form-label">Email</label>
+								<input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+							</div>
+
+							<div class="mb-4">
+								<label for="inputPassword" class="form-label">Mot de passe</label>
+								<input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+							</div>
+
+							<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+							<div class="form-check mb-4">
+								<input type="checkbox" name="_remember_me" id="remember_me" class="form-check-input">
+								<label class="form-check-label" for="remember_me">Se rappeler de moi</label>
+							</div>
+
+							<button class="btn btn-lg btn-primary w-100" type="submit">Sign in</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}
+
+{% block stylesheets %}
+	<style>
+		body {
+			background-color: #f7f9fc;
+			font-family: 'Arial', sans-serif;
+		}
+
+		.container {
+			padding-top: 100px;
+		}
+
+		.card {
+			border-radius: 10px;
+		}
+
+		.form-label {
+			font-weight: bold;
+		}
+
+		.btn-primary {
+			background-color: #007bff;
+			border: none;
+		}
+
+		.btn-primary:hover {
+			background-color: #0056b3;
+		}
+	</style>
+{% endblock %}

@@ -41,4 +41,14 @@ class TicketRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
+
+
+    public function findByStatutEnAttente()
+    {
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.statut = :status')
+            ->setParameter('status', 'en attente')
+            ->getQuery()
+            ->getResult();
+    }
 }
