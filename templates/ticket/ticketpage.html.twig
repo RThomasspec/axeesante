@@ -1,5 +1,10 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+	<p>
+		Temps d'attente estimé
+		{{waitingTime}}
+		minutes
+	</p>
 	<h1>{{ticket.numero}}</h1>
 {% endblock %}

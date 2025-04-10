@@ -42,7 +42,7 @@ final class PatientController extends AbstractController
             $ticket->setNumero($this->ticketGenerator->generateTicketNumber());
             $heureArrivee = new \DateTime();
 
-            $patient->setHeureArrivee($heureArrivee);
+            $ticket->setHeureArrivee($heureArrivee);
             $manager->persist($patient);
             $manager->flush();
             $manager->persist($ticket);
@@ -60,12 +60,16 @@ final class PatientController extends AbstractController
 
 
     #[Route('/ticket/{id}', name: 'ticket_page')]
-    public function ticket(Ticket $ticket)
+    public function ticket(Ticket $ticket, TicketRepository $ticketRepository, EntityManagerInterface $manager)
     {
 
+        $nbplaceinfront = $ticketRepository->getTicketCount($manager, $ticket->getHeureArrivee());
+        $minuteperperson = 2;
+        $waitingTime = $nbplaceinfront * $minuteperperson;
 
         return $this->render("ticket/ticketpage.html.twig", [
-            'ticket' => $ticket
+            'ticket' => $ticket,
+            'waitingTime' =>  $waitingTime,
 
         ]);
     }

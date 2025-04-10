@@ -26,8 +26,6 @@ class Patient
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $datedenaissance = null;
 
-    #[ORM\Column(type: Types::TIME_MUTABLE)]
-    private ?\DateTimeInterface $heure_arrivee = null;
 
     #[ORM\OneToOne(mappedBy: 'patient', cascade: ['persist', 'remove'])]
     private ?Ticket $ticket = null;
@@ -64,17 +62,6 @@ class Patient
         return $this;
     }
 
-    public function getHeureArrivee(): ?\DateTimeInterface
-    {
-        return $this->heure_arrivee;
-    }
-
-    public function setHeureArrivee(\DateTimeInterface $heure_arrivee): static
-    {
-        $this->heure_arrivee = $heure_arrivee;
-
-        return $this;
-    }
 
     public function getDatedenaissance(): ?\DateTimeInterface
     {

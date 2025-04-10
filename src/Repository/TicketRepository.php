@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Ticket;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * @extends ServiceEntityRepository<Ticket>
@@ -16,21 +17,21 @@ class TicketRepository extends ServiceEntityRepository
         parent::__construct($registry, Ticket::class);
     }
 
-    //    /**
-    //     * @return Ticket[] Returns an array of Ticket objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('t')
-    //            ->andWhere('t.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('t.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    public function getTicketCount(EntityManagerInterface $entityManager, \DateTimeInterface $heure)
+    {
+        $qb = $entityManager->createQueryBuilder();
 
+        $qb->select('COUNT(t.id)')
+            ->from(Ticket::class, 't')
+            ->where('t.heure_arrivee < :heure')
+            ->andWhere('t.statut = :statut')
+            ->setParameter('heure', $heure)
+            ->setParameter('statut', 'en attente');
+
+        $count = $qb->getQuery()->getSingleScalarResult();
+
+        return $count; // Exemple de retour JSON
+    }
 
     public function findLastTicket(): ?Ticket
     {
