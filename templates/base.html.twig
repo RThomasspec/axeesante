@@ -13,15 +13,22 @@
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
 			<div class="container-fluid">
 				<a class="navbar-brand" href="{{ path('app_patient') }}">Mon Application</a>
+				<!-- Le bouton hamburger qui apparaît sur mobile -->
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+
+				<!-- Contenu de la navigation qui se cache sur les petits écrans et se déplie sur les grands écrans -->
 				<div class="collapse navbar-collapse" id="navbarNav">
 					<ul class="navbar-nav ms-auto">
 						{% if app.user %}
-							<!-- Si l'utilisateur est connecté, afficher Déconnexion -->
+							<!-- Si l'utilisateur est connecté, afficher Déconnexion et Administration -->
 							<li class="nav-item">
 								<a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
+							</li>
+							<li class="nav-item">
 								<a class="nav-link" href="{{ path('admin_tickets') }}">Administration</a>
 							</li>
-
 						{% else %}
 							<!-- Si l'utilisateur n'est pas connecté, afficher Inscription et Connexion -->
 							<li class="nav-item">
@@ -35,6 +42,7 @@
 				</div>
 			</div>
 		</nav>
+
 		<body>
 			{% block body %}{% endblock %}
 		</body>

@@ -40,8 +40,8 @@ final class PatientController extends AbstractController
             $ticket->setPatient($patient);
             $ticket->setStatut("en attente");
             $ticket->setNumero($this->ticketGenerator->generateTicketNumber());
-            $heureArrivee = new \DateTime();
 
+            $heureArrivee = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
             $ticket->setHeureArrivee($heureArrivee);
             $manager->persist($patient);
             $manager->flush();
