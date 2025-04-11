@@ -42,12 +42,12 @@ class TicketRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-
     public function findByStatutEnAttente()
     {
         return $this->createQueryBuilder('t')
             ->andWhere('t.statut = :status')
             ->setParameter('status', 'en attente')
+            ->orderBy('t.heure_arrivee', 'ASC') // tri par heure d'arrivée décroissante
             ->getQuery()
             ->getResult();
     }
